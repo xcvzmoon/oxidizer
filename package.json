@@ -1,0 +1,21 @@
+{
+  "name": "@xcvzmoon/oxidizer",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "wasm:build": "cd rust && wasm-pack build --target bundler --out-dir pkg",
+    "rust:build": "cd rust && cargo build",
+    "rust:run": "cd rust && cargo run",
+    "rust:check": "cd rust && cargo check",
+    "rust:test": "cd rust && cargo test",
+    "nitro:build": "pnpm wasm:build && pnpm --filter nitro build",
+    "nitro:dev": "pnpm wasm:build && pnpm --filter nitro dev"
+  },
+  "dependencies": {
+    "rust-wasm": "file:./rust/pkg"
+  },
+  "keywords": [],
+  "author": "xcvzmoon",
+  "license": "ISC",
+  "packageManager": "pnpm@10.18.0"
+}
