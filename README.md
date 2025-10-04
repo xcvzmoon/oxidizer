@@ -51,10 +51,10 @@ oxidizer/
    pnpm install
    ```
 
-3. Build the Rust application:
+3. Build the WASM module:
 
    ```bash
-   pnpm rust:build
+   pnpm wasm:build
    ```
 
 ## Development
@@ -71,14 +71,18 @@ The server will be available at `http://localhost:3000`
 
 ### Available Scripts
 
+#### WASM (WebAssembly)
+
+- `pnpm wasm:build` - Build Rust code to WebAssembly module
+
 #### Nitro (Web Server)
 
-- `pnpm nitro:dev` - Start development server
-- `pnpm nitro:build` - Build for production
+- `pnpm nitro:dev` - Build WASM and start development server
+- `pnpm nitro:build` - Build WASM and build for production
 
 #### Rust (Backend)
 
-- `pnpm rust:build` - Compile Rust application
+- `pnpm rust:build` - Compile Rust application (traditional binary)
 - `pnpm rust:run` - Run Rust application directly
 - `pnpm rust:check` - Check Rust code without building
 - `pnpm rust:test` - Run Rust tests
@@ -86,20 +90,30 @@ The server will be available at `http://localhost:3000`
 ## How It Works
 
 1. The Nitro server (`nitro/server/routes/index.ts`) handles HTTP requests
-2. When a request comes in, it executes the compiled Rust binary (`rust/target/debug/rust.exe`)
-3. The Rust application generates HTML content and outputs it to stdout
-4. The Nitro server captures this output and serves it as the HTTP response
+2. Rust code is compiled to WebAssembly (WASM) using wasm-pack
+3. The WASM module is imported and executed directly in the Nitro server
+4. Rust functions are called through wasm-bindgen bindings
+5. The server returns the processed content as HTTP responses
+
+This approach provides better performance and seamless integration compared to executing separate binaries.
 
 ## Production Build
 
 To build the entire project for production:
 
 ```bash
-# Build Rust application
-pnpm rust:build
+# Build WASM module and Nitro server
+pnpm nitro:build
+```
+
+Or build components separately:
+
+```bash
+# Build WASM module
+pnpm wasm:build
 
 # Build Nitro server
-pnpm nitro:build
+pnpm --filter nitro build
 ```
 
 The built Nitro server will be available in `nitro/.output/server/`
@@ -115,6 +129,9 @@ node .output/server/index.mjs
 
 - **[Nitro](https://nitro.build/)** - Universal web server framework
 - **[Rust](https://www.rust-lang.org/)** - Systems programming language
+- **[WebAssembly (WASM)](https://webassembly.org/)** - Binary instruction format for web
+- **[wasm-pack](https://rustwasm.github.io/wasm-pack/)** - Tool for building Rust-generated WebAssembly
+- **[wasm-bindgen](https://rustwasm.github.io/wasm-bindgen/)** - Bindings between Rust and JavaScript
 - **[TypeScript](https://www.typescriptlang.org/)** - Type-safe JavaScript
 - **[PNPM](https://pnpm.io/)** - Fast, disk space efficient package manager
 - **[H3](https://github.com/unjs/h3)** - HTTP framework for Nitro
