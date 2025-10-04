@@ -3,11 +3,16 @@
   "private": true,
   "scripts": {
     "build": "nitro build",
-    "dev": "nitro dev"
+    "dev": "nitro dev",
+    "format": "prettier --write *.ts server/**/*.ts",
+    "lint": "oxlint . --fix -D correctness --ignore-path .gitignore"
   },
   "devDependencies": {
+    "@prettier/plugin-oxc": "^0.0.4",
     "@types/node": "^24.6.2",
     "h3": "^1.15.4",
-    "nitropack": "^2.12.4"
+    "nitropack": "^2.12.4",
+    "oxlint": "^1.19.0",
+    "prettier": "^3.6.2"
   }
 }

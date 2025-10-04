@@ -9,7 +9,9 @@
     "rust:check": "cd rust && cargo check",
     "rust:test": "cd rust && cargo test",
     "nitro:build": "pnpm wasm:build && pnpm --filter nitro build",
-    "nitro:dev": "pnpm wasm:build && pnpm --filter nitro dev"
+    "nitro:dev": "pnpm wasm:build && pnpm --filter nitro dev",
+    "nitro:format": "pnpm --filter nitro format",
+    "nitro:lint": "pnpm --filter nitro lint"
   },
   "dependencies": {
     "rust-wasm": "file:./rust/pkg"
